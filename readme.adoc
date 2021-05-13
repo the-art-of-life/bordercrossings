@@ -6,7 +6,7 @@ To run the application using Maven (Java 11):
 
 Or you just visit it deployed on Heroku:
 
-https://bordercrossings.herokuapp.com
+https://bordercrossings.herokuapp.com (Please note that application might sleep on first invocation)
 
 [NOTE]
 ====
@@ -15,4 +15,5 @@ Few notes to implementation:
 - on correct input country codes it returns existing border crossings or HTTP 404 if no crossing exists as specified by the given task
 - on invalid input country codes `IllegalArgumentException` is thrown (results in HTTP 500), custom exception and more user friendly error handling is not implemented 
 - extension points (effectivity improvements) are described in comments in the source code as there are many options depending on the context which was not specified in the given task
+
 
