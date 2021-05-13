@@ -72,21 +72,21 @@ public class BorderCrossingsServiceImpl implements BorderCrossingService {
 	 * @param originCountry      initial vertex for the search algorithm
 	 * @param destinationCountry target vertex for the search algorithm
 	 * 
-	 * @return border crossings from
+	 * @return shortest path from origin to destination country or empty value if no borders exit between the two
 	 */
 	private Optional<String[]> searchForBorderCrossings(Map<String, CountryNode> countries, CountryNode originCountry, CountryNode destinationCountry) {
 		Queue<CountryNode> countryQueue = new LinkedList<>();
 		originCountry.setDistance(0);
 		countryQueue.add(originCountry);
-		CountryNode visited = null;
+		CountryNode removingFromQueue = null;
 		CountryNode neighbour = null;
 		while (!countryQueue.isEmpty() && !destinationCountry.isVisited()) {
-			visited = countryQueue.poll();
-			for (String neighbourCountryCode : visited.getNeighbours()) {
+			removingFromQueue = countryQueue.poll();
+			for (String neighbourCountryCode : removingFromQueue.getNeighbours()) {
 				neighbour = countries.get(neighbourCountryCode);
 				if (neighbour.isVisited()) continue;
-				neighbour.setPredecessor(visited);
-				neighbour.setDistance(visited.getDistance() + 1);
+				neighbour.setPredecessor(removingFromQueue);
+				neighbour.setDistance(removingFromQueue.getDistance() + 1);
 				if (destinationCountry.equals(neighbour)) break;
 				countryQueue.add(neighbour);
 			}
@@ -96,10 +96,10 @@ public class BorderCrossingsServiceImpl implements BorderCrossingService {
 
 		// reconstructing path to target vertex
 		String[] borderCrossings = new String[destinationCountry.getDistance() + 1];
-		visited = destinationCountry;
-		while (visited != null) {
-			borderCrossings[visited.getDistance()] = visited.getCountryCode();
-			visited = visited.getPredecessor();
+		CountryNode current = destinationCountry;
+		while (current != null) {
+			borderCrossings[current.getDistance()] = current.getCountryCode();
+			current = current.getPredecessor();
 		}
 		return Optional.of(borderCrossings);
 	}
