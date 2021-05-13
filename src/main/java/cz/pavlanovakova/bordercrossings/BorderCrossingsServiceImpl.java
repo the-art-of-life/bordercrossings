@@ -38,9 +38,9 @@ public class BorderCrossingsServiceImpl implements BorderCrossingService {
 
 		Map<String, CountryNode> countries = getCountries();
 		CountryNode originCountryNode = countries.get(origin);
-		if (originCountryNode == null) throw new IllegalArgumentException("Origin country with code: " + origin + "doesn't exist.");
+		if (originCountryNode == null) throw new IllegalArgumentException("Origin country with code: " + origin + " doesn't exist.");
 		CountryNode destinationCountryNode = countries.get(destination);
-		if (destinationCountryNode == null) throw new IllegalArgumentException("Destination country with code: " + destination + "doesn't exist.");
+		if (destinationCountryNode == null) throw new IllegalArgumentException("Destination country with code: " + destination + " doesn't exist.");
 
 		// handle simple cases without running search algorithm
 		if (originCountryNode.getNeighbours().isEmpty() ||
