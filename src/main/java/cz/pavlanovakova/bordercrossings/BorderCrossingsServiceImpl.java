@@ -54,7 +54,7 @@ public class BorderCrossingsServiceImpl implements BorderCrossingService {
 	private Map<String, CountryNode> getCountries() {
 		CountryNode[] countries;
 		try {
-			countries = objectMapper.readValue(countriesFile.getFile(), CountryNode[].class);
+			countries = objectMapper.readValue(countriesFile.getInputStream(), CountryNode[].class);
 		} catch (IOException e) {
 			throw new RuntimeException("Cannot read countries file.", e);
 		}
